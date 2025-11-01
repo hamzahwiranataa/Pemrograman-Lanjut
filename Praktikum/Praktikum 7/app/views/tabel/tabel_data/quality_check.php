@@ -46,12 +46,36 @@
                         <tr>
                             <th><input type="checkbox" name="select_all" onclick="toggleCheckboxes(this )"></th>
                             <th>NO</th>
-                            <th>Produksi ID</th>
-                            <th>Tingkat Cacat</th>
-                            <th>Jumlah</th>
-                            <th>Status</th>
-                            <th>Catatan</th>
-                            <th>Aksi</th>
+                            <th>
+                               <?php 
+                                    $sort_col = $_GET['sort_col'] ?? '';
+                                    $sort_dir = $_GET['sort_dir'] ?? 'ASC';
+                                ?>
+                                Jumlah Pencetakan
+                                <a href="?view=quality_check&sort_col=jumlah_pencetakan&sort_dir=<?= ($sort_col == 'jumlah_pencetakan' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>  
+                            </th>
+                            <th>
+ 
+                                Tingkat Cacat
+                                <a href="?view=quality_check&sort_col=tingkat_cacat&sort_dir=<?= ($sort_col == 'tingkat_cacat' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>  
+                            </th>
+                            <th>
+                                Status
+                                <a href="?view=quality_check&sort_col=status&sort_dir=<?= ($sort_col == 'status' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>  
+                            </th>
+                            <th>
+                                Catatan
+                            </th>
+                            <th>
+                                Edit
+                            </th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -59,14 +83,12 @@
                             <tr>
                                 <td><input type="checkbox" name="ids[]" value="<?= $row['id'] ?>"></td>
                                 <td><?= $no++ ?></td>
-                                <td><?= $row['produksi_id'] ?? '' ?></td>
-                                <td><?= $row['tingkat_cacat'] ?? '' ?>%</td>
-                                <td><?= $row['jumlah'] ?? '' ?></td>
-                                <td><?= $row['status'] ?? '' ?></td>
-                                <td><?= $row['catatan'] ?? '' ?></td>
+                                <td><?= $row['jumlah'] ?></td>
+                                <td><?= $row['tingkat_cacat'] ?>%</td>
+                                <td><?= $row['status'] ?></td>
+                                <td><?= $row['catatan'] ?></td>
                                 <td>
-                                    <button class="btn btn-warning btn-sm" onclick="window.location.href='index.php?view=edit_quality_check&id=<?= $row['id'] ?>'"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-danger btn-sm" onclick="window.location.href='index.php?view=hapus_quality_check&id=<?= $row['id']; ?>'"><i class="fas fa-trash"></i></button>
+                                    <button type="button" class="btn btn-warning btn-sm" onclick="window.location.href='index.php?view=edit_quality_check&id=<?= $row['id'] ?>'"><i class="fas fa-edit"></i></button>
                                 </td>
                             </tr>
                         <?php endforeach; else: ?>
@@ -93,10 +115,10 @@
                 <?php endif; ?>
 
                 <div class="actions">
+                    <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
                     <button type="submit" form="bulkForm" name="action" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to mark the selected items for deletion?');">
                         <i class="fas fa-trash"></i> Delete Selected
                     </button>
-                    <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
                     <a class="btn btn-primary" href="index.php?view=tambah_quality_check"><i class="fas fa-plus"></i> Tambah Data</a>
                     <a class="btn btn-secondary" href="index.php?view=quality_check_restore"><i class="fas fa-share"></i> Restore</a>
                 </div>

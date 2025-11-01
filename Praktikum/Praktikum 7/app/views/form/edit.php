@@ -6,13 +6,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/styles_input.css" />
+    <link rel="stylesheet" href="assets/styles.css" />
     <?php
     $view = isset($_GET['view']) ? $_GET['view'] : '';
     ?>
 </head>
 <body>
 
-    <?php require_once 'header.html'; ?>
+    <?php require_once '../app/views/home/header.html'; ?>
 
     <?php if ($view === 'edit_mesin'): ?>
     <div class="page-wrapper active">
@@ -81,20 +82,16 @@
                     <input type="text" name="nama" value="<?= $detailOperator['nama']; ?>" />
                 </div>
                 <div class="form-group">
-                    <label for="nomor">Nomor</label>
-                    <input type="text" id="nomor" name="nomor" placeholder="Nomor" required />  
-                </div>
-                <div class="form-group">
-                    <label for="nomor">Nomor Confirm</label>
-                    <input type="text" id="nomor" name="nomor" placeholder="Nomor" required />  
+                    <label for="nomor">Nomor</label>    
+                    <input type="text" id="nomor" name="nomor" value=<?= $detailOperator['nomor']; ?> required />  
                 </div>
                 <div class="form-group">
                     <label for="shift">Shift</label>
                     <select name="shift" id="shift">
                         <option value="">Pilih Shift</option>
-                        <option value="Pagi" <?= $detailOperator['shift'] === 'Pagi' ? 'selected' : '' ?>>Pagi</option>
-                        <option value="Siang" <?= $detailOperator['shift'] === 'Siang' ? 'selected' : '' ?>>Siang</option>
-                        <option value="Malam" <?= $detailOperator['shift'] === 'Malam' ? 'selected' : '' ?>>Malam</option>
+                        <option value="Pagi" <?= $detailOperator['shift'] === 'pagi' ? 'selected' : '' ?>>pagi</option>
+                        <option value="Siang" <?= $detailOperator['shift'] === 'siang' ? 'selected' : '' ?>>siang</option>
+                        <option value="Malam" <?= $detailOperator['shift'] === 'malam' ? 'selected' : '' ?>>malam</option>
                     </select>
                 </div>
                 <button type="submit">Edit</button>
@@ -160,8 +157,8 @@
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select name="status" id="status">
-                        <option value="Lulus" <?= $detailQualityCheck['status'] === 'Lulus' ? 'selected' : '' ?>>Lulus</option>
-                        <option value="Ulang" <?= $detailQualityCheck['status'] === 'Ulang' ? 'selected' : '' ?>>Ulang</option>
+                        <option value="lulus" <?= $detailQualityCheck['status'] === 'lulus' ? 'selected' : '' ?>>lulus</option>
+                        <option value="ulang" <?= $detailQualityCheck['status'] === 'ulang' ? 'selected' : '' ?>>ulang</option>
                     </select>
                 </div>
                 <div class="form-group">

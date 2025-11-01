@@ -50,10 +50,9 @@
                             <?php 
                             $sort_col = $_GET['sort_col'] ?? '';
                             $sort_dir = $_GET['sort_dir'] ?? 'ASC';
-                            $next_dir = ($sort_col == 'nama_mesin' && $sort_dir == 'ASC') ? 'DESC' : 'ASC';
                             ?>
                             Nama Mesin
-                            <a href="?view=mesin_restore&sort_col=nama_mesin&sort_dir=<?= $next_dir ?>" style="color:white;">
+                            <a href="?view=mesin_restore&sort_col=nama_mesin&sort_dir=<?= ($sort_col == 'nama_mesin' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
                                 <i class="fa fa-arrows-v"></i>
                             </a>
                         </th>
@@ -122,9 +121,9 @@
 
         <?php endif; ?>
         <div class="actions">
+            <a href="index.php?view=mesin" class="btn btn-secondary">Kembali</a>
             <button type="submit" name="action" value="restore" class="btn btn-warning"><i class="fas fa-share"></i> Restore Selected</button>
             <button type="submit" name="action" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to permanently delete the selected items?');"><i class="fas fa-trash"></i> Delete Selected</button>
-            <a href="index.php?view=mesin" class="btn btn-secondary">Kembali</a>
         </div>
 
         </form>

@@ -47,10 +47,20 @@
                             <th><input type="checkbox" name="select_all" onclick="toggleCheckboxes(this)"></th>
                             <th>NO</th>
                             <th>
+                                <?php 
+                                    $sort_col = $_GET['sort_col'] ?? '';
+                                    $sort_dir = $_GET['sort_dir'] ?? 'ASC';
+                                ?>
                                 Tanggal
+                                <a href="?view=produksi_restore&sort_col=tanggal&sort_dir=<?= ($sort_col == 'tanggal' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>
                             </th>
                             <th>
                                 Jumlah Lembar
+                                <a href="?view=produksi_restore&sort_col=jumlah_lembar&sort_dir=<?= ($sort_col == 'jumlah_lembar' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>   
                             </th>
                         </tr>
                     </thead>
@@ -99,9 +109,9 @@
             <?php endif; ?>
             
             <div class="actions">
+                <a href="index.php?view=produksi" class="btn btn-secondary">Kembali</a>
                 <button type="submit" name="action" value="restore" class="btn btn-warning"><i class="fas fa-share"></i> Restore Selected</button>
                 <button type="submit" name="action" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to permanently delete the selected items?');"><i class="fas fa-trash"></i> Delete Selected</button>
-                <a href="index.php?view=produksi" class="btn btn-secondary">Kembali</a>
             </div>
 
             </form>

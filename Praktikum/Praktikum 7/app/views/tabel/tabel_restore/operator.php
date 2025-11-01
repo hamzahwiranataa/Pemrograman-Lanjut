@@ -47,13 +47,26 @@
                             <th><input type="checkbox" name="select_all" onclick="toggleCheckboxes(this)"></th>
                             <th>NO</th>
                             <th>
+                                <?php 
+                                    $sort_col = $_GET['sort_col'] ?? '';
+                                    $sort_dir = $_GET['sort_dir'] ?? 'ASC';
+                                ?>
                                 Nama Operator
+                                <a href="?view=operator_restore&sort_col=nama_operator&sort_dir=<?= ($sort_col == 'nama' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>
                             </th>
                             <th>
                                 Nomor Telepon
+                                <a href="?view=operator_restore&sort_col=nomor_telepon&sort_dir=<?= ($sort_col == 'nomor' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>
                             </th>
                             <th>
                                 Shift
+                                <a href="?view=operator_restore&sort_col=shift&sort_dir=<?= ($sort_col == 'shift' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>
                             </th>
                         </tr>
                     </thead>
@@ -66,7 +79,7 @@
                                     <td><?= $no++ ?></td>
                                     <td><?= $row['nama'] ?></td>
                                     <td><?= $row['nomor'] ?></td>
-                                    <td><?= $row['shift'] ?> Tahun</td>
+                                    <td><?= $row['shift'] ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else : ?>
@@ -102,9 +115,9 @@
             <?php endif; ?>
             
             <div class="actions">
+                <a href="index.php?view=operator" class="btn btn-secondary">Kembali</a>
                 <button type="submit" name="action" value="restore" class="btn btn-warning"><i class="fas fa-share"></i> Restore Selected</button>
                 <button type="submit" name="action" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to permanently delete the selected items?');"><i class="fas fa-trash"></i> Delete Selected</button>
-                <a href="index.php?view=operator" class="btn btn-secondary">Kembali</a>
             </div>
 
             </form>

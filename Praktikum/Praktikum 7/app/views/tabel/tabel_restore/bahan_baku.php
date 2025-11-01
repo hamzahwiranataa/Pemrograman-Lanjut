@@ -47,13 +47,26 @@
                             <th><input type="checkbox" name="select_all" onclick="toggleCheckboxes(this)"></th>
                             <th>NO</th>
                             <th>
+                               <?php 
+                                    $sort_col = $_GET['sort_col'] ?? '';
+                                    $sort_dir = $_GET['sort_dir'] ?? 'ASC';
+                                ?>
                                 Nama Bahan
+                                <a href="?view=bahan_baku_restore&sort_col=nama_bahan&sort_dir=<?= ($sort_col == 'nama_bahan' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>
                             </th>
                             <th>
                                 Jenis
+                                <a href="?view=bahan_baku_restore&sort_col=jenis&sort_dir=<?= ($sort_col == 'jenis' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>
                             </th>
                             <th>
                                 Stok
+                                <a href="?view=bahan_baku_restore&sort_col=stok&sort_dir=<?= ($sort_col == 'stok' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>
                             </th>
                         </tr>
                     </thead>
@@ -66,7 +79,7 @@
                                     <td><?= $no++ ?></td>
                                     <td><?= $row['nama_bahan'] ?></td>
                                     <td><?= $row['jenis'] ?></td>
-                                    <td><?= $row['stok'])?></td>
+                                    <td><?= $row['stok'] ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else : ?>
@@ -102,9 +115,9 @@
             <?php endif; ?>
             
             <div class="actions">
+                <a href="index.php?view=bahan_baku" class="btn btn-secondary">Kembali</a>
                 <button type="submit" name="action" value="restore" class="btn btn-warning"><i class="fas fa-share"></i> Restore Selected</button>
                 <button type="submit" name="action" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to permanently delete the selected items?');"><i class="fas fa-trash"></i> Delete Selected</button>
-                <a href="index.php?view=bahan_baku" class="btn btn-secondary">Kembali</a>
             </div>
 
             </form>

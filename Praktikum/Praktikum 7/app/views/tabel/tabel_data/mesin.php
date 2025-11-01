@@ -82,7 +82,7 @@
                                     <td><?= $row['kapasitas_per_jam']; ?></td>
                                     <td><?= $row['tahun_pembuatan']; ?></td>
                                     <td>
-                                        <button class="btn btn-warning btn-sm" onclick="window.location.href='index.php?view=edit_mesin&id=<?= $row['id']; ?>'"><i class="fas fa-edit"></i></button>
+                                        <button type="button" class="btn btn-warning btn-sm" onclick="window.location.href='index.php?view=edit_mesin&id=<?= $row['id']; ?>'"><i class="fas fa-edit"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -124,15 +124,12 @@
 
         <?php endif; ?>
         <div class="actions">
+            <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
             <button type="submit" form="bulkForm" name="action" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to mark the selected items for deletion?');">
                 <i class="fas fa-trash"></i> Delete Selected
             </button>
-            <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
             <a class="btn btn-primary" href="index.php?view=tambah_mesin"><i class="fas fa-plus"></i> Tambah Data</a>
             <a class="btn btn-secondary" href="index.php?view=mesin_restore"><i class="fas fa-share"></i> Restore</a>
-            <?php if (empty($_POST['ids'] ?? [])): ?>
-                <p class="text-danger" style="margin-top: 10px;">Please select at least one item</p>
-            <?php endif; ?>
         </div>
 
         </form>

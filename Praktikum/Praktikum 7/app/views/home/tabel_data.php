@@ -20,7 +20,111 @@
   
 
 
+        <div id="barang" class="page <?= ($_GET['view'] ?? '')=='bahan_baku' ? 'active' : '' ?>">
+            <h2><i class="fa-solid fa-boxes-stacked"></i> Bahan Baku</h2>
+            <div class="search-container">
+                <form method="POST" action="">
+                    <input type="hidden" name="view" value="<?= $_GET['view'] ?? '' ?>">
+                    <input type="text" name="search" class="search-input" placeholder="Cari Bahan Baku" value="<?= $_POST['search'] ?? '' ?>">
+                    <button type="submit" class="search-btn"><i class="fas fa-search"></i> Cari</button>
+                </form>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" name="select_all" onclick="toggleCheckboxes(this)"></th>
+                            <th>NO</th>
+                            <th>
+                                Nama Bahan
+                                <a href="?view=bahan_baku&sort_col=nama_bahan&sort_dir=<?= ($sort_col == 'nama_bahan' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                    <?php if($sort_col == 'nama_bahan'): ?>
+                                        
+                                    <?php endif; ?>
+                                </a>
+                            </th>
+                            <th>
+                                Jenis
+                                <a href="?view=bahan_baku&sort_col=jenis&sort_dir=<?= ($sort_col == 'jenis' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                    <?php if($sort_col == 'jenis'): ?>
+                                        
+                                    <?php endif; ?>
+                                </a>
+                            </th>
+                            <th>
+                                Stok
+                                <a href="?view=bahan_baku&sort_col=stok&sort_dir=<?= ($sort_col == 'stok' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                    <?php if($sort_col == 'stok'): ?>
+                                        
+                                    <?php endif; ?>
+                                </a>
+                            </th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($data)) : ?>
+                            <?php $no = 1; ?>
+                            <?php foreach ($data as $row) : ?>
+                               
+                                    <tr>
+                                        <td><input type="checkbox" name="ids[]" value="<?= $row['id'] ?>" <?= isset($_POST['ids']) && is_array($_POST['ids']) && in_array($row['id'], $_POST['ids']) ? 'checked' : '' ?>></td>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= $row['nama_bahan']; ?></td>
+                                        <td><?= $row['jenis']; ?></td>
+                                        <td><?= $row['stok']; ?></td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm" onclick="window.location.href='index.php?view=edit_bahan_baku&id=<?= $row['id']; ?>'"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-danger btn-sm" onclick="window.location.href='index.php?view=hapus_bahan_baku&id=<?= $row['id']; ?>'"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                    
+                            <?php endforeach; ?>
+                                <?php if ($no == 1): ?>
+                                    <tr>
+                                        <td colspan="5">Belum ada data</td>
+                                    </tr>
+                                <?php endif; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="5">Belum ada data</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php
+            $total_pages = ceil($total_records / $records_per_page);
+            if ($total_pages > 1): ?>
+            <div class="pagination">
+                <?php if ($page > 1): ?>
+                    <a href="?view=bahan_baku&page=1<?= isset($_GET['sort_col']) ? '&sort_col='.$_GET['sort_col'].'&sort_dir='.$_GET['sort_dir'] : '' ?>">&laquo;</a>
+                    <a href="?view=bahan_baku&page=<?= $page-1 ?><?= isset($_GET['sort_col']) ? '&sort_col='.$_GET['sort_col'].'&sort_dir='.$_GET['sort_dir'] : '' ?>">&lsaquo;</a>
+                <?php endif; ?>
+                
+                <?php for($i = max(1, $page-2); $i <= min($page+2, $total_pages); $i++): ?>
+                    <?php if($i == $page): ?>
+                        <span class="active"><?= $i ?></span>
+                    <?php else: ?>
+                        <a href="?view=bahan_baku&page=<?= $i ?><?= isset($_GET['sort_col']) ? '&sort_col='.$_GET['sort_col'].'&sort_dir='.$_GET['sort_dir'] : '' ?>"><?= $i ?></a>
+                    <?php endif; ?>
+                <?php endfor; ?>
 
+                <?php if ($page < $total_pages): ?>
+                    <a href="?view=bahan_baku&page=<?= $page+1 ?><?= isset($_GET['sort_col']) ? '&sort_col='.$_GET['sort_col'].'&sort_dir='.$_GET['sort_dir'] : '' ?>">&rsaquo;</a>
+                    <a href="?view=bahan_baku&page=<?= $total_pages ?><?= isset($_GET['sort_col']) ? '&sort_col='.$_GET['sort_col'].'&sort_dir='.$_GET['sort_dir'] : '' ?>">&raquo;</a>
+                <?php endif; ?>
+            </div>
+            <?php endif; ?>
+            <div class="actions">
+                <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
+                <a class="btn btn_primary" href="index.php?view=tambah_bahan_baku"><i class="fas fa-plus"></i> Tambah Data</a>
+                <a class="btn btn-secondary" href="index.php?view=bahan_baku_restore"><i class="fas fa-share"></i> Restore</a>
+            </div>
+        </div>
 
          <div id="kategori" class="page <?= ($_GET['view'] ?? '')=='operator' ? 'active' : '' ?>">
             <h2><i class="fa-solid fa-users"></i> Operator</h2>

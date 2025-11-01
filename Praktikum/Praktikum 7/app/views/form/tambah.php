@@ -6,13 +6,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="assets/styles_input.css" />
+    <link rel="stylesheet" href="assets/styles.css" />
     <?php
     $view = isset($_GET['view']) ? $_GET['view'] : '';
     ?>
 </head>
 <body>
 
-    <?php require_once 'header.html'; ?>
+    <?php require_once '../app/views/home/header.html'; ?>
 
     <?php if ($view === 'tambah_mesin'): ?>
     <div class="page-wrapper active">

@@ -47,13 +47,26 @@
                             <th><input type="checkbox" name="select_all" onclick="toggleCheckboxes(this)"></th>
                             <th>NO</th>
                             <th>
+                               <?php 
+                                    $sort_col = $_GET['sort_col'] ?? '';
+                                    $sort_dir = $_GET['sort_dir'] ?? 'ASC';
+                                ?>
                                 Jumlah Pencetakan
+                                <a href="?view=quality_check_restore&sort_col=jumlah_pencetakan&sort_dir=<?= ($sort_col == 'jumlah_pencetakan' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>  
                             </th>
                             <th>
                                 Tingkat Cacat
+                                <a href="?view=quality_check_restore&sort_col=tingkat_cacat&sort_dir=<?= ($sort_col == 'tingkat_cacat' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>  
                             </th>
                             <th>
                                 Status
+                                <a href="?view=quality_check_restore&sort_col=status&sort_dir=<?= ($sort_col == 'status' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                    <i class="fa fa-arrows-v"></i>
+                                </a>  
                             </th>
                             <th>
                                 Catatan
@@ -64,14 +77,14 @@
                     <tbody>
                         <?php if (!empty($data)) : ?>
                             <?php $no = ($page - 1) * $records_per_page + 1; ?>
-                            <?php foreach ($data as $item) : ?>
+                            <?php foreach ($data as $row) : ?>
                                 <tr>
-                                    <td><input type="checkbox" name="ids[]" value="<?= $item['id'] ?>"></td>
+                                    <td><input type="checkbox" name="ids[]" value="<?= $row['id'] ?>"></td>
                                     <td><?= $no++ ?></td>
-                                    <td><?= htmlspecialchars($item['jumlah']) ?></td>
-                                    <td><?= htmlspecialchars($item['tingkat_cacat']) ?></td>
-                                    <td><?= htmlspecialchars($item['status']) ?></td>
-                                    <td><?= htmlspecialchars($item['catatan']) ?></td>
+                                    <td><?= $row['jumlah'] ?></td>
+                                    <td><?= $row['tingkat_cacat'] ?>%</td>
+                                    <td><?= $row['status'] ?></td>
+                                    <td><?= $row['catatan'] ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else : ?>
@@ -107,9 +120,9 @@
             <?php endif; ?>
             
             <div class="actions">
+                <a href="index.php?view=quality_check" class="btn btn-secondary">Kembali</a>
                 <button type="submit" name="action" value="restore" class="btn btn-warning"><i class="fas fa-share"></i> Restore Selected</button>
                 <button type="submit" name="action" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to permanently delete the selected items?');"><i class="fas fa-trash"></i> Delete Selected</button>
-                <a href="index.php?view=quality_check" class="btn btn-secondary">Kembali</a>
             </div>
 
             </form>

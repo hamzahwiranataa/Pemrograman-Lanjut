@@ -2,6 +2,10 @@
 session_start();
 require_once '../app/models/produksi_uang_model.php';
 require_once '../app/core/validator.php';
+require_once '../app/repositories/ProduksiRepository.php';
+require_once '../app/helpers/Sanitizer.php';
+require_once '../app/helpers/DateHelper.php';
+
 
 class Produksi_Uang {
     private $model;
@@ -10,6 +14,7 @@ class Produksi_Uang {
     public function __construct() {
         $this->model = new Produksi_Uang_Model();
         $this->validator = new Validator();
+        $this->repository = new Repository();
     }
 
     public function index() {
@@ -127,7 +132,7 @@ class Produksi_Uang {
             case 'tambah_mesin':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nama_mesin = $_POST['nama_mesin'];
-                    $kapasitas_per_jam = $_POST['kapasitas_per_jam'];
+                    $kapasitas_per_jam = Sanitizer::alphanumeric($_POST['kapasitas_per_jam']);
                     $tahun_pembuatan = $_POST['tahun_pembuatan'];
 
                     $Opsi_Kapasitas_Per_Jam = [500, 1000, 1500, 2000, 2500];
@@ -136,7 +141,7 @@ class Produksi_Uang {
 
                     if (!empty($this->validator->errors())) {
                         $errors = $this->validator->errors();
-                        require_once "../app/views/produksi/tambah.php";
+                        require_once "../app/views/form/tambah.php";
                         break;
                     }
 
@@ -144,19 +149,19 @@ class Produksi_Uang {
                     header("Location: index.php?view=mesin");
                     exit;
                 }
-                require_once "../app/views/produksi/tambah.php";
+                require_once "../app/views/form/tambah.php";
                 break;
             case 'tambah_bahan_baku':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nama_bahan = $_POST['nama_bahan'];
                     $jenis = $_POST['jenis'];
-                    $stok = $_POST['stok'];
+                    $stok = Sanitizer::alphanumeric($_POST['stok']);
 
                     $this->validator->between($stok, 5000, 20000, 'Stok');
 
                     if (!empty($this->validator->errors())) {
                         $errors = $this->validator->errors();
-                        require_once "../app/views/produksi/tambah.php";
+                        require_once "../app/views/form/tambah.php";
                         break;
                     }
 
@@ -164,26 +169,26 @@ class Produksi_Uang {
                     header("Location: index.php?view=bahan_baku");
                     exit;
                 }
-                require_once "../app/views/produksi/tambah.php";
+                require_once "../app/views/form/tambah.php";
                 break;
             case 'tambah_operator':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $nama = $_POST['nama'];
-                    $nomor = $_POST['nomor'];
+                    $nama = Sanitizer::name($_POST['nama']);
+                    $nomor = Sanitizer::phone($_POST['nomor']);
                     $shift = $_POST['shift'];
 
                     $this->validator->unique($nomor, 'Nomor', 'operators', 'nomor');
 
                     if (!empty($this->validator->errors())) {
                         $errors = $this->validator->errors();
-                        require_once "../app/views/produksi/tambah.php";
+                        require_once "../app/views/form/tambah.php";
                         break;
                     }                    
                     $this->model->addOperator($nama, $nomor, $shift);
                     header("Location: index.php?view=operator");
                     exit;
                 }
-                require_once "../app/views/produksi/tambah.php";
+                require_once "../app/views/form/tambah.php";
                 break;
             case 'tambah_produksi':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -224,7 +229,7 @@ class Produksi_Uang {
 
                     if (!empty($this->validator->errors())) {
                         $errors = $this->validator->errors();
-                        require_once "../app/views/produksi/tambah.php";
+                        require_once "../app/views/form/tambah.php";
                         break;
                     }
 
@@ -232,20 +237,20 @@ class Produksi_Uang {
                     header("Location: index.php?view=produksi");
                     exit;
                 }
-                require_once "../app/views/produksi/tambah.php";
+                require_once "../app/views/form/tambah.php";
                 break;
             case 'tambah_quality_check':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $produksi_id = $_POST['produksi_id'];
                     $kondisi = $_POST['tingkat_cacat']; 
-                    $jumlah = $_POST['jumlah'];
+                    $jumlah = Sanitizer::alphanumeric($_POST['jumlah']);
                     $status = $_POST['status'];
                     $catatan = $_POST['catatan'];
                     $this->model->addQualityCheck($produksi_id, $kondisi, $jumlah, $status, $catatan);
                     header("Location: index.php?view=quality_check");
                     exit;
                 }
-                require_once "../app/views/produksi/tambah.php";
+                require_once "../app/views/form/tambah.php";
                 break;
 
             case 'edit_mesin':
@@ -255,7 +260,7 @@ class Produksi_Uang {
                 }
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nama_mesin = $_POST['nama_mesin'];
-                    $kapasitas_per_jam = $_POST['kapasitas_per_jam'];
+                    $kapasitas_per_jam = Sanitizer::alphanumeric($_POST['kapasitas_per_jam']);
                     $tahun_pembuatan = $_POST['tahun_pembuatan'];
 
                     $Opsi_Kapasitas_Per_Jam = [500, 1000, 1500, 2000, 2500];
@@ -264,7 +269,7 @@ class Produksi_Uang {
 
                     if (!empty($this->validator->errors())) {
                         $errors = $this->validator->errors();
-                        require_once "../app/views/produksi/tambah.php";
+                        require_once "../app/views/form/tambah.php";
                         break;
                     }
 
@@ -272,7 +277,7 @@ class Produksi_Uang {
                     header("Location: index.php?view=mesin");
                     exit;
                 }
-                require_once "../app/views/produksi/edit.php";
+                require_once "../app/views/form/edit.php";
                 break;
  
 
@@ -284,13 +289,13 @@ class Produksi_Uang {
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nama_bahan = $_POST['nama_bahan'];
                     $jenis = $_POST['jenis'];
-                    $stok = $_POST['stok'];
+                    $stok = Sanitizer::alphanumeric($_POST['stok']);
 
                     $this->validator->between($stok, 5000, 20000, 'Stok');
 
                     if (!empty($this->validator->errors())) {
                         $errors = $this->validator->errors();
-                        require_once "../app/views/produksi/tambah.php";
+                        require_once "../app/views/form/tambah.php";
                         break;
                     }
 
@@ -298,7 +303,7 @@ class Produksi_Uang {
                     header("Location: index.php?view=bahan_baku");
                     exit;
                 }
-                require_once "../app/views/produksi/edit.php";
+                require_once "../app/views/form/edit.php";
                 break;
             case 'edit_operator':
                 $id = $_GET['id'] ?? null;
@@ -306,15 +311,15 @@ class Produksi_Uang {
                     $detailOperator = $this->model->getOperatorById($id);
                 }
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $nama = $_POST['nama'];
-                    $nomor = $_POST['nomor'];
+                    $nama = Sanitizer::name($_POST['nama']);
+                    $nomor = Sanitizer::phone($_POST['nomor']);
                     $shift = $_POST['shift'];
 
                     $this->validator->unique($nomor, 'Nomor', 'operators', 'nomor');
 
                     if (!empty($this->validator->errors())) {
                         $errors = $this->validator->errors();
-                        require_once "../app/views/produksi/tambah.php";
+                        require_once "../app/views/form/tambah.php";
                         break;
                     }          
 
@@ -322,8 +327,34 @@ class Produksi_Uang {
                     header("Location: index.php?view=operator");
                     exit;
                 }
-                require_once "../app/views/produksi/edit.php";
+                require_once "../app/views/form/edit.php";
                 break;
+
+            case 'edit_produksi':
+                $id = $_GET['id'] ?? null;
+                if ($id) {
+                    $detailProduksi = $this->model->getProduksiById($id);
+                }
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $tanggal = $_POST['tanggal'];
+                    $jumlah_lembar = Sanitizer::alphanumeric($_POST['jumlah_lembar']);
+                    $mesin_id = $_POST['mesin_id'];
+                    $bahan_id = $_POST['bahan_id'];
+                    $operator_id = $_POST['operator_id'];
+                    $this->validator->dateFormat($tanggal, 'Tanggal', 'Y-m-d');
+                    $this->validator->between($jumlah_lembar, 10000, 50000, 'Jumlah Lembar');
+                    if (!empty($this->validator->errors())) {
+                        $errors = $this->validator->errors();
+                        require_once "../app/views/form /edit.php";
+                        break;
+                    }
+                    $this->model->updateProduksi($id, $tanggal, $jumlah_lembar, $mesin_id, $bahan_id, $operator_id);
+                    header("Location: index.php?view=produksi");
+                    exit;
+                }
+                require_once "../app/views/form/edit.php";
+                break;
+
             case 'edit_quality_check':
                 $id = $_GET['id'] ?? null;
                 if ($id) {
@@ -331,7 +362,7 @@ class Produksi_Uang {
                 }
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $produksi_id = $_POST['produksi_id'];
-                    $jumlah = $_POST['jumlah'];
+                    $jumlah = Sanitizer::alphanumeric($_POST['jumlah']);
                     $tingkat_cacat = $_POST['tingkat_cacat'];
                     $status = $_POST['status'];
                     $catatan = $_POST['catatan'];
@@ -341,7 +372,7 @@ class Produksi_Uang {
                     header("Location: index.php?view=quality_check");
                     exit;
                 }
-                require_once "../app/views/produksi/edit.php";
+                require_once "../app/views/form/edit.php";
                 break;
 
             case 'hapus_mesin':
@@ -447,7 +478,7 @@ class Produksi_Uang {
                 $action = $_POST['action'] ?? '';
                 $view = $_POST['view'] ?? '';
                 
-                // Determine the table based on the view
+
                 $table = '';
                 if (strpos($view, 'mesin') !== false) $table = 'mesin';
                 elseif (strpos($view, 'bahan_baku') !== false) $table = 'bahan_baku';
@@ -457,14 +488,14 @@ class Produksi_Uang {
                 
                 if (!empty($ids) && !empty($table)) {
                     if (strpos($view, '_restore') !== false) {
-                        // For restore pages - handle restore and permanent delete
+
                         if ($action === 'restore') {
-                            $result = $this->model->restoreBulk($table, $ids);
+                            $result = $this->repository->restoreBulk($table, $ids);
                         } elseif ($action === 'delete') {
-                            $result = $this->model->forceDeleteBulk($table, $ids);
+                            $result = $this->repository->forceDeleteBulk($table, $ids);
                         }
                     } else {
-                        // For regular pages - handle soft delete
+
                         if ($action === 'delete') {
                             $result = $this->model->softDeleteBulk($table, $ids);
                         }
@@ -479,14 +510,13 @@ class Produksi_Uang {
                     $_SESSION['flash_type'] = 'error';
                 }
 
-                // Redirect back to the original view
                 header("Location: index.php?view={$view}");
                 exit;
                 break;
             
             case 'auto_delete':
                 $days = isset($_GET['days']) ? (int)$_GET['days'] : 30;
-                $result = $this->model->autoDeleteOld($days);
+                $result = $this->repository->autoDeleteOld($days);
                 
                 if ($result['success']) {
                     $_SESSION['flash_message'] = "Successfully deleted {$result['count']} old records";

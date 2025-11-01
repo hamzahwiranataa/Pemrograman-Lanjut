@@ -46,12 +46,23 @@
                             <tr>
                                 <th><input type="checkbox" name="select_all" onclick="toggleCheckboxes(this )"></th>
                                 <th>NO</th>
-                                <th>Tanggal</th>
-                                <th>Jumlah Lembar</th>
-                                <th>Mesin ID</th>
-                                <th>Bahan ID</th>
-                                <th>Operator ID</th>
-                                <th>Aksi</th>
+                                <th>
+                                    <?php 
+                                        $sort_col = $_GET['sort_col'] ?? '';
+                                        $sort_dir = $_GET['sort_dir'] ?? 'ASC';
+                                    ?>
+                                    Tanggal
+                                    <a href="?view=produksi&sort_col=tanggal&sort_dir=<?= ($sort_col == 'tanggal' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                        <i class="fa fa-arrows-v"></i>
+                                    </a>
+                                </th>
+                                <th>
+                                    Jumlah Lembar
+                                    <a href="?view=produksi&sort_col=jumlah_lembar&sort_dir=<?= ($sort_col == 'jumlah_lembar' && $sort_dir == 'ASC') ? 'DESC' : 'ASC' ?>" style="color:white;">
+                                        <i class="fa fa-arrows-v"></i>
+                                    </a>                                
+                                </th>
+                                <th>Edit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,12 +72,8 @@
                                     <td><?= $no++; ?></td>
                                     <td><?= $row['tanggal'] ?? '' ?></td>
                                     <td><?= $row['jumlah_lembar'] ?? '' ?></td>
-                                    <td><?= $row['mesin_id'] ?? '' ?></td>
-                                    <td><?= $row['bahan_id'] ?? '' ?></td>
-                                    <td><?= $row['operator_id'] ?? '' ?></td>
                                     <td>
-                                        <button class="btn btn-warning btn-sm" onclick="window.location.href='index.php?view=edit_produksi&id=<?= $row['id'] ?>'"><i class="fas fa-edit"></i></button>
-                                        <button class="btn btn-danger btn-sm" onclick="window.location.href='index.php?view=hapus_produksi&id=<?= $row['id']; ?>'"><i class="fas fa-trash"></i></button>
+                                        <button type="button" class="btn btn-warning btn-sm" onclick="window.location.href='index.php?view=edit_produksi&id=<?= $row['id'] ?>'"><i class="fas fa-edit"></i></button>
                                     </td>
                                 </tr>
                             <?php endforeach; else: ?>
@@ -93,10 +100,10 @@
                     <?php endif; ?>
 
                     <div class="actions">
+                        <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
                         <button type="submit" form="bulkForm" name="action" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to mark the selected items for deletion?');">
                             <i class="fas fa-trash"></i> Delete Selected
                         </button>
-                        <a href="index.php" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a>
                         <a class="btn btn-primary" href="index.php?view=tambah_produksi"><i class="fas fa-plus"></i> Tambah Data</a>
                         <a class="btn btn-secondary" href="index.php?view=produksi_restore"><i class="fas fa-share"></i> Restore</a>
                     </div>
