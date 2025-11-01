@@ -86,7 +86,7 @@ class Csrf
                 header('Content-Type: application/json');
                 echo json_encode(['error' => 'CSRF token invalid or missing']);
             } else {
-                echo '<h1>403 Forbidden</h1><p>CSRF token invalid or missing.</p>';
+                echo '<h1>403 Forbidden</h1></p>';
             }
             exit;
         }

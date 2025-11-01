@@ -34,6 +34,7 @@
                 </div>
             <?php endif; ?>
             <form method="POST" action="index.php?view=tambah_mesin">
+                <?php echo csrf::inputField(); ?>
                 <div class="form-group">
                     <label for="nama_mesin">Nama Mesin</label>
                     <input type="text" id="nama_mesin" name="nama_mesin" minlength="13" placeholder="Nama Mesin" required />
@@ -70,6 +71,7 @@
                 </div>
             <?php endif; ?>
             <form method="POST" action="index.php?view=tambah_bahan_baku">
+                <?php echo csrf::inputField(); ?>
                 <div class="form-group">
                     <label for="nama_bahan">Nama Bahan</label>
                     <input type="text" id="nama_bahan" name="nama_bahan" placeholder="Nama Bahan" required />
@@ -106,6 +108,7 @@
                 </div>
             <?php endif; ?>
             <form method="POST" action="index.php?view=tambah_operator">
+                <?php echo csrf::inputField(); ?>
                 <div class="form-group">
                     <label for="nama">Nama</label>
                     <input type="text" id="nama" name="nama" placeholder="nama" required />
@@ -151,6 +154,7 @@
                 </div>
             <?php endif; ?>
             <form method="POST" action="index.php?view=tambah_produksi">
+                <?php echo csrf::inputField(); ?>
                 <div class="form-group">
                     <label for="tanggal">Tanggal</label>
                     <input type="date" id="tanggal" name="tanggal"  required />
@@ -195,6 +199,7 @@
                 </div>
             <?php endif; ?>
             <form method="POST" action="index.php?view=tambah_quality_check">
+                <?php echo csrf::inputField(); ?>
                 <div class="form-group">
                     <label for="produksi_id">Produksi ID</label>
                     <input type="number" id="produksi_id" name="produksi_id" placeholder="Produksi ID" required />

@@ -2,6 +2,7 @@
 session_start();
 require_once '../app/models/produksi_uang_model.php';
 require_once '../app/core/validator.php';
+require_once '../app/core/Csrf.php';
 require_once '../app/repositories/ProduksiRepository.php';
 require_once '../app/helpers/Sanitizer.php';
 require_once '../app/helpers/DateHelper.php';
@@ -131,6 +132,7 @@ class Produksi_Uang {
 
             case 'tambah_mesin':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    csrf::verifyOrFail($_POST['csrf_token'] ?? '');
                     $nama_mesin = $_POST['nama_mesin'];
                     $kapasitas_per_jam = Sanitizer::alphanumeric($_POST['kapasitas_per_jam']);
                     $tahun_pembuatan = $_POST['tahun_pembuatan'];
@@ -153,6 +155,7 @@ class Produksi_Uang {
                 break;
             case 'tambah_bahan_baku':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    csrf::verifyOrFail($_POST['csrf_token'] ?? '');
                     $nama_bahan = $_POST['nama_bahan'];
                     $jenis = $_POST['jenis'];
                     $stok = Sanitizer::alphanumeric($_POST['stok']);
@@ -192,6 +195,7 @@ class Produksi_Uang {
                 break;
             case 'tambah_produksi':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    csrf::verifyOrFail($_POST['csrf_token'] ?? '');
                     $tanggal = $_POST['tanggal'];
                     $jumlah_lembar = $_POST['jumlah_lembar'];
                     $mesin_id = $_POST['mesin_id'];
@@ -241,6 +245,7 @@ class Produksi_Uang {
                 break;
             case 'tambah_quality_check':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    csrf::verifyOrFail($_POST['csrf_token'] ?? '');
                     $produksi_id = $_POST['produksi_id'];
                     $kondisi = $_POST['tingkat_cacat']; 
                     $jumlah = Sanitizer::alphanumeric($_POST['jumlah']);
