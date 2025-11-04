@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../app/controllers/HomeController.php';
+require_once __DIR__ . '/../app/controllers/Controller.php';
 
-$controller = new HomeController();
+$controller = new Controller();
 $action = $_GET['action'] ?? 'index';
 
 switch ($action) {

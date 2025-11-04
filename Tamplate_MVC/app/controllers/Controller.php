@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/User.php';
 
-class HomeController {
+class Controller {
     private $userModel;
 
     public function __construct() {
