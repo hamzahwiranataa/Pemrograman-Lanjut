@@ -1,31 +1,40 @@
 <?php
-require_once __DIR__ . '/../app/controllers/Controller.php';
+session_start();
+require_once '../app/controllers/LoginController.php';
+require_once '../app/controllers/SuperAdminController.php';
+require_once '../app/controllers/OperatorController.php';
+require_once '../app/controllers/PegawaiController.php';
 
-$controller = new Controller();
+$LoginController = new LoginController();
+$SuperAdminController = new SuperAdminController();
+$OperatorController = new OperatorController();
+$PegawaiController = new PegawaiController();
+
 $action = $_GET['action'] ?? 'index';
+$page = $_GET['page'] ?? 'index';
 
-switch ($action) {
-    case 'add_form':
-        $controller->formAdd();
-        break;
+if ($action === 'login') {
+    $LoginController->CheckLogin();
+    exit;
+}
 
-    case 'edit_form':
-        $controller->formEdit($_GET['id']);
-        break;
+if (isset($_SESSION['username']) && isset($_SESSION['role'])) {
 
-    case 'add_user':
-        $controller->addUser($_POST['nama'], $_POST['tipe']);
-        break;
+    switch ($_SESSION['role']) {
+        case 'superadmin':
+            $SuperAdminController->index();
+            break;
+        case 'operator':
+            $OperatorController->index();
+            break;
+        case 'pegawai':
+            $PegawaiController->index();
+            break;
+        default:
+            echo "Role tidak dikenal.";
+            break;
+    }
 
-    case 'update_user':
-        $controller->updateUser($_POST['id'], $_POST['nama'], $_POST['tipe']);
-        break;
-
-    case 'delete':
-        $controller->deleteUser($_GET['id']);
-        break;
-
-    default:
-        $controller->index();
-        break;
+} else {
+    $LoginController->index();
 }
