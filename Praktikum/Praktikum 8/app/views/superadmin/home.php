@@ -1,6 +1,6 @@
 <?php
-$username = $_SESSION['username'] ?? 'Guest';
-$kategori = $_SESSION['role'] ?? 'None';
+$username = $_SESSION['username'];
+$kategori = $_SESSION['role'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +16,7 @@ $kategori = $_SESSION['role'] ?? 'None';
       <tr>
         <td>
           <center>
-            <h2>Sistem Login</h2>
+            <h2>Home Dashboard</h2>
               <table cellpadding="10">
                 <tr>
                   <td>Username:</td>
