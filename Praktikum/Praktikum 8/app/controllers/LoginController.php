@@ -9,10 +9,10 @@ class LoginController {
     }
 
     public function index() {
-        $flash = null;
-        if (isset($_SESSION['flash'])) {
-            $flash = $_SESSION['flash'];
-            unset($_SESSION['flash']);
+        $ErrorMessage = null;
+        if (isset($_SESSION['Message_Invalid'])) {
+            $ErrorMessage = $_SESSION['Message_Invalid'];
+            unset($_SESSION['Message_Invalid']);
         }
         require_once '../app/views/form/login.php';
     }
@@ -43,7 +43,7 @@ class LoginController {
                 exit;
             }
         } else {
-            $_SESSION['flash'] = [
+            $_SESSION['Message_Invalid'] = [
                 'message' => 'Username atau password salah!',
                 'type' => 'error'
             ];
