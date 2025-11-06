@@ -10,31 +10,34 @@ $SuperAdminController = new SuperAdminController();
 $OperatorController = new OperatorController();
 $PegawaiController = new PegawaiController();
 
-$action = $_GET['action'] ?? 'index';
+$action = $_GET['action'] ?? 'default';
 $page = $_GET['page'] ?? 'index';
 
-if ($action === 'login') {
-    $LoginController->CheckLogin();
-    exit;
-}
+switch ($action) {
+    case 'login':
+        $LoginController->CheckLogin();
+        break;
 
-if (isset($_SESSION['username']) && isset($_SESSION['role'])) {
+    case 'logout':
+        session_destroy();
+        header('Location: index.php');
+        break;
 
-    switch ($_SESSION['role']) {
-        case 'superadmin':
-            $SuperAdminController->index();
-            break;
-        case 'operator':
-            $OperatorController->index();
-            break;
-        case 'pegawai':
-            $PegawaiController->index();
-            break;
-        default:
-            echo "Role tidak dikenal.";
-            break;
-    }
-
-} else {
-    $LoginController->index();
+    default:
+        if (isset($_SESSION['username']) && isset($_SESSION['role'])) {
+            if ($_SESSION['role'] == 'superadmin') {
+                $SuperAdminController->index();
+                exit;
+            }
+            elseif ($_SESSION['role'] == 'operator') {
+                $OperatorController->index();
+                exit;
+            }
+            elseif ($_SESSION['role'] == 'pegawai') {
+                $PegawaiController->index();
+                exit;
+            }
+        }
+        $LoginController->index();
+        exit;
 }
