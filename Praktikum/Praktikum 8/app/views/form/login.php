@@ -26,8 +26,8 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="center" style="color:red;">
-                        <?php if (!empty($flash)) : ?>
-                            <?= htmlspecialchars($flash['message']); ?>
+                        <?php if (!empty($ErrorMessage)) : ?>
+                            <?= htmlspecialchars($ErrorMessage['message']); ?>
                         <?php endif; ?>
                     </td>
                 </tr>
