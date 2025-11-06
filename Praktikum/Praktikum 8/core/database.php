@@ -6,7 +6,7 @@ class Database
     private $host = 'localhost';
     private $username = 'root';
     private $password = '';
-    private $database = 'mvc_example';
+    private $database = 'pl_praktikum_8';
 
     public function __construct()
     {
