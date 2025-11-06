@@ -24,7 +24,7 @@ switch ($action) {
         break;
 
     default:
-        if (isset($_SESSION['username']) && isset($_SESSION['role'])) {
+        if (isset($_SESSION['role'])) {
             if ($_SESSION['role'] == 'superadmin') {
                 $SuperAdminController->index();
                 exit;
