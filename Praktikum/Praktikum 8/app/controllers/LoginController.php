@@ -24,12 +24,9 @@ class LoginController {
         $user = $this->LoginModel->CheckUser($username, $password);
 
         if ($user) {
-            // ambil kategori user
             $kategori = $this->LoginModel->CheckKategoriUser($username);
-            // Ambil nilai kategori dari array
             $KategoriUser = $kategori['kategori'];
 
-            // set session berdasarkan kategori
             $_SESSION['username'] = $username;
 
             if ($KategoriUser == 0) {
