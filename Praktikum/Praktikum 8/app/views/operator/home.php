@@ -1,7 +1,3 @@
-<?php
-$username = $_SESSION['username'];
-$kategori = $_SESSION['role'];
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,11 +16,19 @@ $kategori = $_SESSION['role'];
               <table cellpadding="10">
                 <tr>
                   <td>Username:</td>
-                  <td><?php echo htmlspecialchars($username); ?></td>
+                  <td><?= $row['username']; ?></td>
                 </tr>
                 <tr>
-                  <td>Kategori:</td>
-                  <td><?php echo htmlspecialchars($kategori); ?></td>
+                    <td>Role:</td>
+                    <td><?php 
+                    if($row['kategori'] == 0) { 
+                        echo "Super Admin"; 
+                        } elseif($row['kategori'] == 1) {
+                            echo "Operator"; 
+                        } elseif($row['kategori'] == 2) {
+                            echo "Pegawai"; 
+                        } ?>
+                </td>
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
