@@ -8,6 +8,8 @@ class OperatorController {
         $this->Operator = new Operator();
     }
     public function index() {
+        $username = $_SESSION['username'];
+        $row = $this->Operator->GetUserData($username);
         require_once  '../app/views/operator/home.php';
     }
 }
