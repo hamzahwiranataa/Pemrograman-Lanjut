@@ -23,7 +23,7 @@
                 </tr>
                 <tr>
                   <td>Password:</td>
-                  <td><input type="text" name="password" value="<?= $user['password']; ?>" size=    "30" required></td>
+                  <td><input type="text" name="password" value="<?= $user['password']; ?>" size="30" required></td>
                 </tr>
                 <tr>
                     <td>Kategori</td>
