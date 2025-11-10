@@ -31,7 +31,7 @@ else {
     if ($_SESSION['role'] == 'superadmin') {
         switch($action) {
             case 'logout':
-                session_destroy();
+                session_destroy(); 
                 $LoginController->index();
                 header('Location: index.php');
                 break;
